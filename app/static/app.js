@@ -67,8 +67,8 @@ function renderJob(job) {
       <tr><td>Complexity</td><td>${job.features.complexity_score}</td></tr>
     </table>`;
   downloads.innerHTML = `
-    <a href="/api/jobs/${job.job_id}/quote.pdf">Download PDF</a>
-    <a href="/api/jobs/${job.job_id}/program.nc">Download .nc</a>`;
+    <a href="/api/jobs/${job.job_id}/quote.pdf">Download PDF Quote</a>
+    <a href="/api/jobs/${job.job_id}/program.nc">Download G-code .nc</a>`;
   drawPreview(job);
 }
 

@@ -91,6 +91,11 @@ p {
   grid-column: 1 / -1;
 }
 
+.quote-panel {
+  grid-column: 1 / -1;
+  border-color: rgba(15, 118, 110, 0.35);
+}
+
 label {
   display: grid;
   gap: 6px;
@@ -146,25 +151,33 @@ button:hover {
 }
 
 .metric {
-  font-size: 26px;
+  font-size: clamp(30px, 4vw, 46px);
   font-weight: 900;
 }
 
 .downloads {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
-  margin-top: 12px;
+  margin-top: 18px;
 }
 
 .downloads a {
   display: inline-flex;
-  padding: 9px 12px;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 14px 20px;
   border-radius: 6px;
-  background: #e6f4f1;
-  color: var(--accent-dark);
-  font-weight: 800;
+  background: var(--accent);
+  color: white;
+  font-size: 15px;
+  font-weight: 900;
   text-decoration: none;
+}
+
+.downloads a:hover {
+  background: var(--accent-dark);
 }
 
 table {
@@ -180,7 +193,6 @@ td, th {
 }
 
 pre {
-  min-height: 220px;
   overflow: auto;
   margin: 0;
   padding: 14px;
@@ -188,6 +200,13 @@ pre {
   background: #111827;
   color: #d1fae5;
   font-size: 13px;
+}
+
+.gcode-viewer {
+  height: 400px;
+  overflow-y: scroll;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
 }
 
 @media (max-width: 860px) {
