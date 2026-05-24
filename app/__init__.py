@@ -1,0 +1,1 @@
+"""ProtoTech CNC Intelligence app."""

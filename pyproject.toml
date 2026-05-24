@@ -1,0 +1,31 @@
+[project]
+name = "prototech-cnc"
+version = "1.0.0"
+description = "Local-first DXF to quote and G-code MVP for ProtoTech CNC Intelligence"
+requires-python = ">=3.11"
+dependencies = [
+  "anthropic",
+  "ezdxf",
+  "fastapi",
+  "pydantic",
+  "pydantic-settings",
+  "python-dotenv",
+  "python-multipart",
+  "reportlab",
+  "uvicorn",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+plugins = []
+ignore_missing_imports = true
+strict = false

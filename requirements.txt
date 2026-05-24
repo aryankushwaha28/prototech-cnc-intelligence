@@ -1,0 +1,9 @@
+anthropic
+ezdxf
+fastapi
+pydantic
+pydantic-settings
+python-dotenv
+python-multipart
+reportlab
+uvicorn
