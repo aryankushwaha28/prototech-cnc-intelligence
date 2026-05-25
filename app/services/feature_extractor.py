@@ -8,6 +8,9 @@ from app.schemas.features import (
 from app.schemas.geometry import GeometrySummary, RawGeometry
 
 
+DEFAULT_2D_STOCK_THICKNESS_MM = 5.0
+
+
 class FeatureExtractor:
     def extract(self, geometry: RawGeometry) -> FeatureSet:
         holes = [
@@ -84,5 +87,9 @@ class FeatureExtractor:
             circle_count=len(geometry.circles),
             polyline_count=len(geometry.polylines),
             bounding_box=bbox,
-            estimated_stock_size_mm=(round(bbox.width + 5, 3), round(bbox.height + 5, 3), 15.0),
+            estimated_stock_size_mm=(
+                round(bbox.width + 5, 3),
+                round(bbox.height + 5, 3),
+                DEFAULT_2D_STOCK_THICKNESS_MM,
+            ),
         )
