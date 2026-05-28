@@ -11,6 +11,9 @@ from app.schemas.geometry import GeometrySummary, RawGeometry
 DEFAULT_2D_STOCK_THICKNESS_MM = 3.0
 
 
+MIN_POCKET_PERIMETER_MM = 20.0
+
+
 class FeatureExtractor:
     def extract(self, geometry: RawGeometry) -> FeatureSet:
         holes = [
@@ -36,7 +39,7 @@ class FeatureExtractor:
                 vertices=poly.vertices,
             )
             contours.append(contour)
-            if not is_outer and poly.area:
+            if not is_outer and poly.area and poly.perimeter >= MIN_POCKET_PERIMETER_MM:
                 pockets.append(
                     PocketFeature(
                         feature_id=f"P{len(pockets) + 1:03d}",
