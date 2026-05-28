@@ -162,10 +162,12 @@ button:hover {
   margin-top: 18px;
 }
 
-.downloads a {
+.downloads a,
+.downloads button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: auto;
   min-height: 52px;
   padding: 14px 20px;
   border-radius: 6px;
@@ -174,9 +176,11 @@ button:hover {
   font-size: 15px;
   font-weight: 900;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.downloads a:hover {
+.downloads a:hover,
+.downloads button:hover {
   background: var(--accent-dark);
 }
 
@@ -207,6 +211,14 @@ pre {
   overflow-y: scroll;
   font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
   font-size: 12px;
+}
+
+.ncviewer-frame {
+  width: 100%;
+  height: 620px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: white;
 }
 
 @media (max-width: 860px) {

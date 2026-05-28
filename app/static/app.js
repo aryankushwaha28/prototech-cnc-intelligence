@@ -5,6 +5,7 @@ const featureBox = document.querySelector("#featureBox");
 const downloads = document.querySelector("#downloads");
 const gcodeBox = document.querySelector("#gcodeBox");
 const preview = document.querySelector("#preview");
+let currentGcode = "";
 
 function setStatus(text) {
   pill.textContent = text;
@@ -68,7 +69,9 @@ function renderJob(job) {
     </table>`;
   downloads.innerHTML = `
     <a href="/api/jobs/${job.job_id}/quote.pdf">Download PDF Quote</a>
-    <a href="/api/jobs/${job.job_id}/program.nc">Download G-code .nc</a>`;
+    <a href="/api/jobs/${job.job_id}/program.nc">Download G-code .nc</a>
+    <button type="button" data-action="copy-gcode">Copy G-code</button>
+    <a href="https://ncviewer.com/" target="_blank" rel="noreferrer">Open NCViewer</a>`;
   drawPreview(job);
 }
 
@@ -80,9 +83,23 @@ async function poll(jobId) {
     window.setTimeout(() => poll(jobId), 700);
   } else if (job.status === "complete") {
     const nc = await fetch(`/api/jobs/${jobId}/program.nc`);
-    gcodeBox.textContent = await nc.text();
+    currentGcode = await nc.text();
+    gcodeBox.textContent = currentGcode;
   }
 }
+
+downloads.addEventListener("click", async (event) => {
+  const target = event.target;
+  if (!(target instanceof HTMLElement) || target.dataset.action !== "copy-gcode") return;
+  if (!currentGcode) {
+    currentGcode = gcodeBox.textContent || "";
+  }
+  await navigator.clipboard.writeText(currentGcode);
+  target.textContent = "Copied G-code";
+  window.setTimeout(() => {
+    target.textContent = "Copy G-code";
+  }, 1400);
+});
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -90,6 +107,7 @@ form.addEventListener("submit", async (event) => {
   quoteBox.textContent = "Running pipeline...";
   featureBox.textContent = "Parsing DXF...";
   downloads.innerHTML = "";
+  currentGcode = "";
   gcodeBox.textContent = "(waiting for generated .nc)";
   preview.innerHTML = "";
 
