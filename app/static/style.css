@@ -58,6 +58,12 @@ p {
   margin-top: 8px;
 }
 
+.panel-note {
+  margin: -6px 0 14px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 .pill {
   min-width: 96px;
   text-align: center;
@@ -182,6 +188,14 @@ button:hover {
 .downloads a:hover,
 .downloads button:hover {
   background: var(--accent-dark);
+}
+
+.downloads .secondary-action {
+  background: #243447;
+}
+
+.downloads .secondary-action:hover {
+  background: #17202a;
 }
 
 table {

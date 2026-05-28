@@ -71,6 +71,7 @@ function renderJob(job) {
     <a href="/api/jobs/${job.job_id}/quote.pdf">Download PDF Quote</a>
     <a href="/api/jobs/${job.job_id}/program.nc">Download G-code .nc</a>
     <button type="button" data-action="copy-gcode">Copy G-code</button>
+    <button type="button" class="secondary-action" data-action="simulate-ncviewer">Simulate in NCViewer</button>
     <a href="https://ncviewer.com/" target="_blank" rel="noreferrer">Open NCViewer</a>`;
   drawPreview(job);
 }
@@ -90,14 +91,23 @@ async function poll(jobId) {
 
 downloads.addEventListener("click", async (event) => {
   const target = event.target;
-  if (!(target instanceof HTMLElement) || target.dataset.action !== "copy-gcode") return;
+  if (!(target instanceof HTMLElement)) return;
+  const action = target.dataset.action;
+  if (!action || !["copy-gcode", "simulate-ncviewer"].includes(action)) return;
   if (!currentGcode) {
     currentGcode = gcodeBox.textContent || "";
   }
-  await navigator.clipboard.writeText(currentGcode);
-  target.textContent = "Copied G-code";
+  try {
+    await navigator.clipboard.writeText(currentGcode);
+  } catch {
+    gcodeBox.focus();
+  }
+  if (action === "simulate-ncviewer") {
+    window.open("https://ncviewer.com/", "_blank", "noreferrer");
+  }
+  target.textContent = action === "simulate-ncviewer" ? "Copied + opened" : "Copied G-code";
   window.setTimeout(() => {
-    target.textContent = "Copy G-code";
+    target.textContent = action === "simulate-ncviewer" ? "Simulate in NCViewer" : "Copy G-code";
   }, 1400);
 });
 
