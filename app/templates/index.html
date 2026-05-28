@@ -61,9 +61,17 @@
           <pre id="gcodeBox" class="gcode-viewer">(generated .nc preview appears after completion)</pre>
         </div>
         <div class="panel wide">
-          <h2>NCViewer simulation</h2>
-          <p class="panel-note">NCViewer blocks third-party auto-upload from embedded pages. Use the simulation button after generation to copy the G-code and open NCViewer.</p>
-          <iframe class="ncviewer-frame" src="https://ncviewer.com/" title="NCViewer simulation"></iframe>
+          <div class="panel-heading">
+            <div>
+              <h2>Toolpath simulation</h2>
+              <p class="panel-note">Generated G-code is parsed and rendered here automatically after each job completes.</p>
+            </div>
+            <button id="fitToolpath" type="button" class="small-action">Fit view</button>
+          </div>
+          <div class="toolpath-layout">
+            <canvas id="toolpathCanvas" width="960" height="540"></canvas>
+            <div id="toolpathStats" class="toolpath-stats">Waiting for G-code.</div>
+          </div>
         </div>
       </section>
     </section>
