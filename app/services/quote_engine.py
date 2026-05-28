@@ -20,9 +20,9 @@ class QuoteEngine:
 
         contour_length = sum(c.perimeter_mm for c in features.contours + features.open_profiles)
         base_time = contour_length / material.feed_rate_mm_min if contour_length else 0.5
-        feature_penalty = len(features.holes) * 0.8 + len(features.pockets) * 2.5 + len(features.radii) * 0.3
+        feature_penalty = len(features.holes) * 0.8 + len(features.pockets) * 2.5
         complexity_factor = 1.0 + (features.complexity_score / 100.0) * 0.5
-        setup_time = 5.0 + (features.complexity_score / 100.0) * 20.0
+        setup_time = 10.0 + (features.complexity_score / 100.0) * 50.0
         total_time = ((base_time + feature_penalty) * complexity_factor * (1 / material.machinability_factor)) + setup_time
         machining_cost = (total_time / 60.0) * request.machine_rate_inr
         tooling = machining_cost * 0.08

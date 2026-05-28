@@ -8,7 +8,7 @@ from app.schemas.features import (
 from app.schemas.geometry import GeometrySummary, RawGeometry
 
 
-DEFAULT_2D_STOCK_THICKNESS_MM = 5.0
+DEFAULT_2D_STOCK_THICKNESS_MM = 3.0
 
 
 class FeatureExtractor:
