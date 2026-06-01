@@ -1,0 +1,13 @@
+.cache/
+.claude/
+.git/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.venv/
+jobs/
+server.log
+uvicorn.err.log
+uvicorn.out.log
+__pycache__/
+*.pyc
