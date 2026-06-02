@@ -1,19 +1,9 @@
 services:
   - type: web
-    name: prototech-cnc-intelligence
-    env: docker
-    plan: starter
-    healthCheckPath: /
+    name: prototech-cnc-pipeline
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
-      - key: JOBS_DIR
-        value: /app/jobs
-      - key: MAX_UPLOAD_SIZE_MB
-        value: "10"
-      - key: DEFAULT_MACHINE_RATE_INR
-        value: "800"
-      - key: DEFAULT_MARGIN_PCT
-        value: "20"
-      - key: LOG_LEVEL
-        value: "INFO"
-      - key: INR_TO_USD_RATE
-        value: "83.5"
+      - key: PYTHON_VERSION
+        value: 3.11.0
