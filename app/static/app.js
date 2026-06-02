@@ -179,6 +179,10 @@ function parseGcode(text) {
     if (!line || line === "%") continue;
 
     const codes = [...line.matchAll(/G0?(\d+)/g)].map((match) => `G${match[1].padStart(2, "0")}`);
+    if (codes.includes("G80")) {
+      modal = "G00";
+      continue;
+    }
     const motion = codes.find((code) => ["G00", "G01", "G02", "G03", "G81"].includes(code));
     if (motion) modal = motion;
 
@@ -311,15 +315,21 @@ function drawToolpath(toolpath) {
   for (const drill of toolpath.drills) {
     const mapped = map(drill);
     ctx.beginPath();
-    ctx.arc(mapped.x, mapped.y, 4, 0, Math.PI * 2);
-    ctx.fillStyle = "#f59e0b";
+    ctx.arc(mapped.x, mapped.y, 7, 0, Math.PI * 2);
+    ctx.strokeStyle = "#f59e0b";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(mapped.x, mapped.y, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = "#fbbf24";
     ctx.fill();
   }
 
   const cutCount = toolpath.segments.filter((segment) => segment.type !== "rapid").length;
   const rapidCount = toolpath.segments.length - cutCount;
+  const eventCount = toolpath.segments.length + toolpath.drills.length;
   toolpathStats.innerHTML = `
-    <strong>${toolpath.segments.length.toLocaleString()} moves</strong>
+    <strong>${eventCount.toLocaleString()} toolpath events</strong>
     Cut moves: ${cutCount.toLocaleString()}<br>
     Rapid moves: ${rapidCount.toLocaleString()}<br>
     Drill cycles: ${toolpath.drills.length.toLocaleString()}<br>
