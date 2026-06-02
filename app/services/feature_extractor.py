@@ -60,6 +60,16 @@ class FeatureExtractor:
             for index, poly in enumerate(geometry.polylines)
             if not poly.is_closed
         ]
+        line_profiles = [
+            ContourFeature(
+                feature_id=f"L{index + 1:03d}",
+                perimeter_mm=round(line.length, 3),
+                is_outer_profile=False,
+                vertices=[line.start, line.end],
+            )
+            for index, line in enumerate(geometry.lines)
+        ]
+        open_profiles.extend(line_profiles)
         radii = [
             RadiusFeature(
                 feature_id=f"R{index + 1:03d}",

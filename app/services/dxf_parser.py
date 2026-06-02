@@ -127,6 +127,27 @@ class DXFParser:
                     )
                 )
                 points.extend(vertices)
+            elif kind == "SPLINE":
+                try:
+                    spline_points = list(entity.flattening(0.5))  # type: ignore[attr-defined]
+                except Exception:
+                    spline_points = list(getattr(entity, "fit_points", [])) or list(getattr(entity, "control_points", []))
+                vertices = [Point2D(x=float(point.x), y=float(point.y)) for point in spline_points]
+                if len(vertices) < 2:
+                    continue
+                closed = bool(getattr(entity, "closed", False))
+                if not closed and _distance(vertices[0], vertices[-1]) <= 0.01:
+                    closed = True
+                polylines.append(
+                    PolylineEntity(
+                        vertices=vertices,
+                        is_closed=closed,
+                        perimeter=_poly_perimeter(vertices, closed),
+                        area=_poly_area(vertices) if closed else None,
+                        layer=layer,
+                    )
+                )
+                points.extend(vertices)
 
         entity_count = len(lines) + len(arcs) + len(circles) + len(polylines)
         if entity_count == 0 or not points:
