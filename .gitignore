@@ -10,3 +10,4 @@ jobs/
 *.pyc
 uvicorn.err.log
 uvicorn.out.log
+.claude/
